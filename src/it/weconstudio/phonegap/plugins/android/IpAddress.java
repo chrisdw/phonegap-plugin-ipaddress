@@ -19,8 +19,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
  
-import org.apache.http.conn.util.InetAddressUtils;
-
 import android.util.Log;
 
 /**
@@ -33,7 +31,6 @@ public class IpAddress extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
     	
     	String ipAddress = getIPAddress(true);
-//	ipAddress = getIPAddress(true);
         if (ipAddress != null && ipAddress.length() > 0) {
             callbackContext.success(ipAddress);
             
@@ -141,7 +138,7 @@ public class IpAddress extends CordovaPlugin {
                 for (InetAddress addr : addrs) {
                     if (!addr.isLoopbackAddress()) {
                         String sAddr = addr.getHostAddress().toUpperCase();
-                        boolean isIPv4 = InetAddressUtils.isIPv4Address(sAddr); 
+                        boolean isIPv4 = (addr instanceof Inet4Address); 
                         if (useIPv4) {
                             if (isIPv4) 
                                 return sAddr;
